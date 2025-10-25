@@ -25,7 +25,8 @@ class Auth extends BaseController
     {
         $usuarioModel = new UsuarioModel();
 
-        $validacion = $this->validate([
+        // Reglas de validación
+        $reglas = [
             'id_usuario' => 'required|min_length[6]|max_length[10]|numeric|is_unique[usuarios.id_usuario]',
             'nombre' => 'required|min_length[3]|max_length[50]',
             'apellidos' => 'required|min_length[3]|max_length[50]',
@@ -33,7 +34,26 @@ class Auth extends BaseController
             'id_tipo_documento' => 'required|in_list[1,2,3]',
             'password' => 'required|min_length[6]',
             'confirm_password' => 'matches[password]',
-        ]);
+        ];
+
+        // Mensajes de error personalizados
+        $mensajes = [
+            'id_usuario' => [
+                'is_unique' => 'El número de documento ya está registrado.',
+            ],
+            'email' => [
+                'is_unique' => 'El correo electrónico ya está registrado.',
+            ],
+            'confirm_password' => [
+                'matches' => 'Las contraseñas no coinciden.',
+            ],
+            'id_tipo_documento' => [
+                'in_list' => 'El tipo de documento seleccionado no es válido.',
+            ],
+        ];
+
+        // Validar Datos, pasando reglas y mensajes
+        $validacion = $this->validate($reglas, $mensajes);
 
         if (!$validacion) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
@@ -48,7 +68,7 @@ class Auth extends BaseController
             'email' => $this->request->getPost('email'),
             'id_tipo_documento' => $this->request->getPost('id_tipo_documento'),
             'password' => $hash,
-            'id_rol' => 3, // Asignar rol por defecto
+            'id_rol' => 3, // Asignar rol cliente por defecto
             'id_estado_usuario' => 1 // Activo por defecto
         ];
 
@@ -82,12 +102,12 @@ class Auth extends BaseController
 
         // Verificar si el usuario existe
         if (!$usuario) {
-            return redirect()->back()->withInput()->with('error', 'El usuario no existe.');
+            return redirect()->back()->withInput()->with('error_email', 'El usuario no existe.');
         }
 
         // Verificar si la cuenta está activa
         if ($usuario['id_estado_usuario'] != 1) {
-            return redirect()->back()->withInput()->with('error', 'Tu cuenta está inactiva. Contacta al administrador.');
+            return redirect()->back()->withInput()->with('error_state', 'Tu cuenta está inactiva. Contacta al administrador.');
         }
 
         if ($usuario && password_verify($password, $usuario['password'])) {
@@ -101,7 +121,7 @@ class Auth extends BaseController
             return $this->redirigirSegunRol();
         } else {
             // Fallo en la autenticación
-            return redirect()->back()->withInput()->with('error', 'Contraseña incorrecta.');
+            return redirect()->back()->withInput()->with('error_password', 'Contraseña incorrecta.');
         }
     }
 
