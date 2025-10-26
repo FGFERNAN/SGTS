@@ -40,7 +40,7 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="email">Correo Electronico</label>
-                        <input type="email" name="email" id="email" value="<?= old('email') ?>" class="form-control" required>
+                        <input type="email" name="email" id="email" value="<?= old('email') ?>" class="form-control <?= session()->getFlashdata('error_email') != '' ? 'error-input' : '' ?>" required>
                         <div class="invalid-feedback">
                             Por favor ingresa un correo válido.
                         </div>
@@ -52,7 +52,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="password">Contraseña</label>
-                        <input type="password" name="password" id="password" class="form-control" required>
+                        <div class="position-relative">
+                            <input type="password" name="password" id="password" class="form-control <?= session()->getFlashdata('error_password') != '' ? 'error-input' : '' ?>" required>
+                            <i class="fa-solid fa-eye-slash password-toggle d-none"></i>
+                        </div>
                         <div class="invalid-feedback">
                             Por favor ingresa tu contraseña.
                         </div>
@@ -78,4 +81,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.querySelector('.password-toggle');
+
+        passwordInput.addEventListener('input', () => {
+            if (passwordInput.value.length > 0) {
+                toggleIcon.classList.remove('d-none');
+            } else {
+                toggleIcon.classList.add('d-none');
+            }
+        });
+
+        toggleIcon.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            toggleIcon.classList.toggle('fa-eye');
+            toggleIcon.classList.toggle('fa-eye-slash');
+        });
+    })
+</script>
 <?= $this->endSection() ?>

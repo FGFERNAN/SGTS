@@ -27,12 +27,12 @@ class Auth extends BaseController
 
         // Reglas de validación
         $reglas = [
-            'id_usuario' => 'required|min_length[6]|max_length[10]|numeric|is_unique[usuarios.id_usuario]',
-            'nombre' => 'required|min_length[3]|max_length[50]',
-            'apellidos' => 'required|min_length[3]|max_length[50]',
+            'id_usuario' => 'required|min_length[6]|max_length[11]|numeric|is_unique[usuarios.id_usuario]',
+            'nombre' => 'required|alpha_space|min_length[3]|max_length[50]',
+            'apellidos' => 'required|alpha_space|min_length[3]|max_length[50]',
             'email' => 'required|valid_email|is_unique[usuarios.email]',
             'id_tipo_documento' => 'required|in_list[1,2,3]',
-            'password' => 'required|min_length[6]',
+            'password' => 'required|min_length[6]|max_length[20]|regex_match[/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\-_*])([a-zA-Z0-9@#$%^&+=*.\-_]){6,20}$/]',
             'confirm_password' => 'matches[password]',
         ];
 
@@ -41,8 +41,17 @@ class Auth extends BaseController
             'id_usuario' => [
                 'is_unique' => 'El número de documento ya está registrado.',
             ],
+            'nombre' => [
+                'alpha_space' => 'El nombre solo puede contener letras y espacios.',
+            ],
+            'apellidos' => [
+                'alpha_space' => 'Los apellidos solo pueden contener letras y espacios.',
+            ],
             'email' => [
                 'is_unique' => 'El correo electrónico ya está registrado.',
+            ],
+            'password' => [
+                'regex_match' => 'La contraseña debe tener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',
             ],
             'confirm_password' => [
                 'matches' => 'Las contraseñas no coinciden.',
