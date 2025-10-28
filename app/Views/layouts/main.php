@@ -11,7 +11,6 @@
 </head>
 
 <body class="bg-light">
-    <?= $this->include('layouts/navbar') ?>
 
     <main class="container mt-5">
         <?= $this->renderSection('contenido') ?>
