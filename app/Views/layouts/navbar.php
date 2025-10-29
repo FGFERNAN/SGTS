@@ -7,7 +7,7 @@
         </button>
         <ul class="header-nav d-none d-lg-flex">
             <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/usuarios') ?>">Usuarios</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Reportes</a></li>
         </ul>
         <ul class="header-nav ms-auto">
@@ -93,13 +93,13 @@
                         <svg class="icon me-2">
                             <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-file') ?>"></use>
                         </svg> Projects<span class="badge badge-sm bg-primary ms-2">42</span></a> -->
-                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
-                        <svg class="icon me-2">
-                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
-                        </svg> Cancelar Cuenta</a><a class="dropdown-item" href="#">
-                        <svg class="icon me-2">
-                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-account-logout') ?>"></use>
-                        </svg> Cerrar Sesión</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
+                            <svg class="icon me-2">
+                                <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
+                            </svg> Cancelar Cuenta</a><a class="dropdown-item" href="<?= site_url('logout') ?>">
+                            <svg class="icon me-2">
+                                <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-account-logout') ?>"></use>
+                            </svg> Cerrar Sesión</a>
                 </div>
             </li>
         </ul>

@@ -54,16 +54,17 @@
                         <label class="form-label" for="password">Contraseña</label>
                         <div class="position-relative">
                             <input type="password" name="password" id="password" class="form-control <?= session()->getFlashdata('error_password') != '' ? 'error-input' : '' ?>" required>
+                            <div class="invalid-feedback">
+                                Por favor ingresa tu contraseña.
+                            </div>
+                            <?php if (session()->getFlashdata('error_password')): ?>
+                                <div class="small text-danger mt-1">
+                                    <?= session()->getFlashdata('error_password') ?>
+                                </div>
+                            <?php endif; ?>
                             <i class="fa-solid fa-eye-slash password-toggle d-none"></i>
                         </div>
-                        <div class="invalid-feedback">
-                            Por favor ingresa tu contraseña.
-                        </div>
-                        <?php if (session()->getFlashdata('error_password')): ?>
-                            <div class="small text-danger mt-1">
-                                <?= session()->getFlashdata('error_password') ?>
-                            </div>
-                        <?php endif; ?>
+
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="recordar" name="recordar" readonly>

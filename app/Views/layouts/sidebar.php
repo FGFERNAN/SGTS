@@ -16,12 +16,12 @@
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-speedometer') ?>"></use>
                 </svg> Dashboard<!--<span class="badge badge-sm bg-info ms-auto">NEW</span>--></a></li>
         <li class="nav-title">Administración</li>
-        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/usuarios') ?>">
+        <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/usuarios') ?>">
                 <div class="nav-icon">
                     <i class="fa-solid fa-user"></i>
                 </div> Usuarios
             </a></li>
-        <li class="nav-item"><a class="nav-link" href="typography.html">
+        <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/roles') ?>">
                 <div class="nav-icon">
                     <i class="fa-solid fa-users-gear"></i>
                 </div> Roles
@@ -160,11 +160,11 @@
                         </svg> Error 500</a></li>
             </ul>
         </li> -->
-        <li class="nav-item mt-auto"><a class="nav-link" href="https://coreui.io/bootstrap/docs/templates/installation/" target="_blank">
+        <li class="nav-item"><a class="nav-link" href="https://coreui.io/bootstrap/docs/templates/installation/" target="_blank">
                 <svg class="nav-icon">
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-description') ?>"></use>
                 </svg> Historial</a></li>
-        <li class="nav-item mt-auto"><a class="nav-link" href="https://coreui.io/bootstrap/docs/templates/installation/" target="_blank">
+        <li class="nav-item"><a class="nav-link" href="https://coreui.io/bootstrap/docs/templates/installation/" target="_blank">
                 <svg class="nav-icon">
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-description') ?>"></use>
                 </svg> Reportes</a></li>
@@ -174,6 +174,6 @@
                 </svg> Try CoreUI PRO</a></li> -->
     </ul>
     <div class="sidebar-footer border-top d-none d-md-flex">
-        <a href="<?= base_url('logout') ?>" class="sidebar-toggler" type="button"></a>
+        <a href="<?= site_url('logout') ?>" class="sidebar-toggler" type="button"></a>
     </div>
 </div>

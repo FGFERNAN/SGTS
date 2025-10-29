@@ -21,16 +21,12 @@
 </head>
 
 <body>
-    <?= $this->include('layouts/sidebar') ?>
-
-    <div class="wrapper d-flex flex-column min-vh-100">
-        <?= $this->include('layouts/navbar') ?>
+    <div class="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
         <div class="body flex-grow-1">
             <div class="container-lg px-4">
                 <?= $this->renderSection('contenido') ?>
             </div>
         </div>
-        <?= $this->include('layouts/footer') ?>
     </div>
 
     <script src="<?= base_url('assets/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>

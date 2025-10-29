@@ -59,7 +59,7 @@
                         <label for="tipo_documento" class="form-label">Tipo Documento</label>
                         <select name="id_tipo_documento" class="form-control <?= isset($errors['id_tipo_documento']) ? 'error-input' : '' ?>" required>
                             <option value="" <?= old('id_tipo_documento') == '' ? 'selected' : '' ?>>Seleccionar...</option>
-                            <option value="1" <?= old('d_tipo_documento') == '1' ? 'selected' : '' ?>>Tarjeta de Identidad</option>
+                            <option value="1" <?= old('id_tipo_documento') == '1' ? 'selected' : '' ?>>Tarjeta de Identidad</option>
                             <option value="2" <?= old('id_tipo_documento') == '2' ? 'selected' : '' ?>>Cedula de Ciudadania</option>
                             <option value="3" <?= old('id_tipo_documento') == '3' ? 'selected' : '' ?>>Cedula de Extranjeria</option>
                         </select>

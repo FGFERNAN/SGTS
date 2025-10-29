@@ -9,7 +9,7 @@
                 <div class="card-body p-4">
                     <h1>Crear Rol</h1>
                     <p class="text-body-secondary">Create role</p>
-                    <form action="<?= site_url('admin/roles/actualizar/' . $rol['id_rol']) ?>" method="POST" class="needs-validation" novalidate>
+                    <form action="<?= site_url('admin/roles/guardar') ?>" method="POST" class="needs-validation" novalidate>
                         <?= csrf_field() ?>
                         <?php $errors = session('errors'); ?>
                         <div class="row g-3">
@@ -18,7 +18,7 @@
                                         <svg class="icon">
                                             <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                         </svg></span>
-                                    <input class="form-control <?= isset($errors['nombre']) ? 'is-invalid' : '' ?>" name="nombre" type="text" placeholder="Nombre" value="<?= old('nombre', esc($rol['nombre'])) ?>" minlength="3" maxlength="50" required>
+                                    <input class="form-control <?= isset($errors['nombre']) ? 'is-invalid' : '' ?>" name="nombre" type="text" placeholder="Nombre" value="<?= old('nombre') ?>" minlength="3" maxlength="50" required>
                                     <div class="invalid-feedback <?= isset($errors['nombre']) ? 'd-none' : '' ?>">
                                         Por favor ingresa el nombre (Solo letras).
                                     </div>
@@ -34,7 +34,7 @@
                                         <svg class="icon">
                                             <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                         </svg></span>
-                                    <textarea class="form-control <?= isset($errors['descripcion']) ? 'is-invalid' : '' ?>" name="descripcion" type="text" placeholder="Descripción" value="<?= old('descripcion') ?>" minlength="5" maxlength="255" required><?= esc($rol['descripcion']) ?></textarea>
+                                    <textarea class="form-control <?= isset($errors['descripcion']) ? 'is-invalid' : '' ?>" name="descripcion" type="text" placeholder="Descripción" value="<?= old('descripcion') ?>" minlength="5" maxlength="255" required></textarea>
                                     <div class="invalid-feedback <?= isset($errors['descripcion']) ? 'd-none' : '' ?>">
                                         Por favor ingresa la descripción (Solo letras).
                                     </div>

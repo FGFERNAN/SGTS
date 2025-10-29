@@ -34,24 +34,45 @@ class Usuarios extends BaseController
             'email' => 'required|valid_email|is_unique[usuarios.email]',
             'id_rol' => 'required',
             'id_tipo_documento' => 'required|in_list[1,2,3]',
+            'password' => 'required|min_length[6]|max_length[20]|regex_match[/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\-_*])([a-zA-Z0-9@#$%^&+=*.\-_]){6,20}$/]',
         ];
 
         // Mensajes de error personalizados
         $mensajes = [
             'id_usuario' => [
                 'is_unique' => 'El número de documento ya está registrado.',
+                'numeric' => 'El número de documento debe ser numérico.',
+                'min_length' => 'El número de documento debe tener al menos 6 caracteres.',
+                'max_length' => 'El número de documento no debe exceder los 11 caracteres.',
+                'required' => 'El número de documento es obligatorio.',
             ],
             'nombre' => [
                 'alpha_space' => 'El nombre solo puede contener letras y espacios.',
+                'required' => 'El nombre es obligatorio.',
+                'min_length' => 'El nombre debe tener al menos 3 caracteres.',
+                'max_length' => 'El nombre no debe exceder los 50 caracteres.',
             ],
             'apellidos' => [
                 'alpha_space' => 'Los apellidos solo pueden contener letras y espacios.',
+                'required' => 'Los apellidos son obligatorios.',
+                'min_length' => 'Los apellidos deben tener al menos 3 caracteres.',
+                'max_length' => 'Los apellidos no deben exceder los 50 caracteres.',
             ],
             'email' => [
                 'is_unique' => 'El correo electrónico ya está registrado.',
+                'valid_email' => 'Por favor ingresa un correo válido.',
+                'required' => 'El correo electrónico es obligatorio.',
             ],
             'id_tipo_documento' => [
                 'in_list' => 'El tipo de documento seleccionado no es válido.',
+                'required' => 'El tipo de documento es obligatorio.',
+            ],
+            'id_rol' => [
+                'required' => 'El rol es obligatorio.',
+            ],
+            'password' => [
+                'regex_match' => 'La contraseña debe tener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',
+                'required' => 'La contraseña es obligatoria.',
             ],
         ];
 
@@ -115,12 +136,27 @@ class Usuarios extends BaseController
         $mensajes = [
             'nombre' => [
                 'alpha_space' => 'El nombre solo puede contener letras y espacios.',
+                'required' => 'El nombre es obligatorio.',
+                'min_length' => 'El nombre debe tener al menos 3 caracteres.',
+                'max_length' => 'El nombre no debe exceder los 50 caracteres.',
             ],
             'apellidos' => [
                 'alpha_space' => 'Los apellidos solo pueden contener letras y espacios.',
+                'required' => 'Los apellidos son obligatorios.',
+                'min_length' => 'Los apellidos deben tener al menos 3 caracteres.',
+                'max_length' => 'Los apellidos no deben exceder los 50 caracteres.',
+            ],
+            'email' => [
+                'is_unique' => 'El correo electrónico ya está registrado.',
+                'valid_email' => 'Por favor ingresa un correo válido.',
+                'required' => 'El correo electrónico es obligatorio.',
             ],
             'id_tipo_documento' => [
                 'in_list' => 'El tipo de documento seleccionado no es válido.',
+                'required' => 'El tipo de documento es obligatorio.',
+            ],
+            'id_rol' => [
+                'required' => 'El rol es obligatorio.',
             ],
         ];
 
@@ -161,6 +197,6 @@ class Usuarios extends BaseController
 
         $mensaje = ($nuevoEstado == 1) ? 'Usuario activado.' : 'Usuario inactivado.';
 
-        return redirect()->back()->with('success', $mensaje);
+        return redirect()->to(site_url('admin/usuarios'))->with('success', $mensaje);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UsuarioModel;
-use CodeIgniter\Controller;
+use App\Controllers\BaseController;
 
 class Auth extends BaseController
 {
@@ -175,5 +175,10 @@ class Auth extends BaseController
         log_message('info', 'Logout - Usuario: ' . session()->get('id_usuario'));
         session()->destroy();
         return redirect()->to('/login')->with('success', 'Has cerrado sesión correctamente.');
+    }
+
+    public function unauthorized()
+    {
+        return view('auth/unauthorized');
     }
 }
