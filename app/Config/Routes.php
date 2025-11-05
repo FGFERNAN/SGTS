@@ -30,7 +30,6 @@ $routes->get('unauthorized', 'Auth::unauthorized');
 // ============================================
 // RUTAS DE DASHBOARD SEGÚN ROL
 // ============================================
-$routes->get('cliente/dashboard', 'Cliente\Dashboard::index');
 $routes->get('tecnico/dashboard', 'Tecnico\Dashboard::index');
 
 
@@ -51,6 +50,22 @@ $routes->group('admin', ['filter' => 'admin'], function ($routes) {
     $routes->post('roles/guardar', 'Admin\Roles::guardar');
     $routes->get('roles/editar/(:segment)', 'Admin\Roles::editar/$1');
     $routes->post('roles/actualizar/(:segment)', 'Admin\Roles::actualizar/$1');
+    $routes->get('categorias', 'Admin\Categorias::index');
+    $routes->get('categorias/crear', 'Admin\Categorias::crear');
+    $routes->post('categorias/guardar', 'Admin\Categorias::guardar');
+    $routes->get('categorias/editar/(:segment)', 'Admin\Categorias::editar/$1');
+    $routes->post('categorias/actualizar/(:segment)', 'Admin\Categorias::actualizar/$1');
+    $routes->get('categorias/eliminar/(:segment)', 'Admin\Categorias::eliminar/$1');
 });
 
 // ============================================
+
+// RUTAS DE CLIENTE
+// ============================================
+$routes->group('cliente', ['filter' => 'role:3'], function ($routes) {
+    // Rutas protegidas por el filtro ClienteFilter
+    $routes->get('dashboard', 'Cliente\Dashboard::index');
+    $routes->get('tickets/crear', 'Cliente\Tickets::crearTicket');
+    $routes->post('tickets/guardar', 'Cliente\Tickets::guardarTicket');
+    $routes->get('tickets/detalles/(:segment)', 'Cliente\Tickets::detallesTicket/$1');
+});

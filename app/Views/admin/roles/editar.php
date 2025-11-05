@@ -7,8 +7,8 @@
         <div class="col-md-8">
             <div class="card mb-4 mx-4">
                 <div class="card-body p-4">
-                    <h1>Crear Rol</h1>
-                    <p class="text-body-secondary">Create role</p>
+                    <h1>Editar Rol</h1>
+                    <p class="text-body-secondary">Edit role</p>
                     <form action="<?= site_url('admin/roles/actualizar/' . $rol['id_rol']) ?>" method="POST" class="needs-validation" novalidate>
                         <?= csrf_field() ?>
                         <?php $errors = session('errors'); ?>

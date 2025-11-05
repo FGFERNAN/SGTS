@@ -34,7 +34,6 @@
     </div>
 
     <script src="<?= base_url('assets/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-    <script src="<?= base_url('assets/js/app.js') ?>"></script>
     <!-- CoreUI and necessary plugins-->
     <script src="<?= base_url('coreui/vendors/@coreui/coreui/js/coreui.bundle.min.js') ?>"></script>
     <script src="<?= base_url('coreui/vendors/simplebar/js/simplebar.min.js') ?>"></script>
@@ -73,6 +72,7 @@
             })
         })()
     </script>
+    <?= $this->renderSection('js_adicional') ?>
 </body>
 
 </html>
