@@ -2,6 +2,14 @@
 
 <?= $this->section('titulo') ?>Dashboard Cliente - SGTS<?= $this->endSection() ?>
 
+<?=$this->section('sidebar') ?>
+    <?= $this->include('layouts/partials/cliente/sidebar') ?>
+<?= $this->endSection() ?>
+
+<?= $this->section('navbar') ?>
+    <?= $this->include('layouts/partials/cliente/navbar') ?>
+<?= $this->endSection() ?>
+
 <?= $this->section('contenido') ?>
 <h2 class="mb-4">Dashboard Cliente</h2>
 <div class="card">

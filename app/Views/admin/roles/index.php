@@ -2,6 +2,15 @@
 
 <?= $this->section('titulo') ?>Roles - SGTS<?= $this->endSection() ?>
 
+<?=$this->section('sidebar') ?>
+    <?= $this->include('layouts/partials/admin/sidebar') ?>
+<?= $this->endSection() ?>
+
+<?= $this->section('navbar') ?>
+    <?= $this->include('layouts/partials/admin/navbar') ?>
+<?= $this->endSection() ?>
+
+
 <?= $this->section('contenido') ?>
 <div class="card">
     <div class="card-header">

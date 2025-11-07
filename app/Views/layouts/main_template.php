@@ -21,10 +21,10 @@
 </head>
 
 <body>
-    <?= $this->include('layouts/sidebar') ?>
+    <?= $this->renderSection('sidebar') ?>
 
     <div class="wrapper d-flex flex-column min-vh-100">
-        <?= $this->include('layouts/navbar') ?>
+        <?= $this->renderSection('navbar') ?>
         <div class="body flex-grow-1">
             <div class="container-lg px-4">
                 <?= $this->renderSection('contenido') ?>
