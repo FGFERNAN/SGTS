@@ -8,7 +8,7 @@
                 <use xlink:href="<?= base_url('coreui/assets/brand/coreui.svg#signet') ?>"></use>
             </svg>
         </div>
-        <button class="btn-close d-lg-none" type="button" data-coreui-theme="dark" aria-label="Close" onclick="coreui.Sidebar.getInstance(document.querySelector(&quot;#sidebar&quot;)).toggle()"></button>
+        <button class="btn-close d-lg-none" type="button" data-coreui-theme="dark" aria-label="Close" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()"></button>
     </div>
     <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
         <li class="nav-item"><a class="nav-link" href="<?= site_url('/') ?>">
@@ -32,7 +32,7 @@
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-list') ?>"></use>
                 </svg> Categorías</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="charts.html">
+        <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/tickets') ?>">
                 <svg class="nav-icon">
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user-follow') ?>"></use>
                 </svg> Asignación</a></li>

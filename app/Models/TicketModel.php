@@ -21,10 +21,27 @@ class TicketModel extends Model
             ->findAll();
     }
 
-    // public function obtenerTicketsPorTecnico($id_tecnico)
-    // {
-    //     return $this->where('id_tecnico', $id_tecnico)->findAll();
-    // }
+    public function obtenerTicketsPorAdmin()
+    {
+        return $this->select('tickets.*, CONCAT(uc.nombre, " " , uc.apellidos) AS nombre_cliente, CONCAT(ut.nombre, " " , ut.apellidos) AS nombre_tecnico, categorias.nombre AS categoria, estados_tickets.nombre AS estado, prioridad_tickets.nombre AS prioridad')
+            ->join('usuarios AS uc', 'tickets.id_usuario_cliente = uc.id_usuario')
+            ->join('usuarios AS ut', 'tickets.id_usuario_tecnico = ut.id_usuario', 'left')
+            ->join('categorias', 'tickets.id_categoria = categorias.id_categoria')
+            ->join('estados_tickets', 'tickets.id_estado_ticket = estados_tickets.id_estado_ticket')
+            ->join('prioridad_tickets', 'tickets.id_prioridad_ticket = prioridad_tickets.id_prioridad_ticket')
+            ->findAll();
+    }
+
+    public function obtenerTicketsPorTecnico($id_tecnico)
+    {
+        return $this->select('tickets.*, CONCAT(uc.nombre, " " , uc.apellidos) AS nombre_cliente, categorias.nombre AS categoria, estados_tickets.nombre AS estado, prioridad_tickets.nombre AS prioridad')
+            ->join('usuarios AS uc', 'tickets.id_usuario_cliente = uc.id_usuario')
+            ->join('categorias', 'tickets.id_categoria = categorias.id_categoria')
+            ->join('estados_tickets', 'tickets.id_estado_ticket = estados_tickets.id_estado_ticket')
+            ->join('prioridad_tickets', 'tickets.id_prioridad_ticket = prioridad_tickets.id_prioridad_ticket')
+            ->where('tickets.id_usuario_tecnico', $id_tecnico)
+            ->findAll();
+    }
 }
 
 ?>

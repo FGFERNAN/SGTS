@@ -2,12 +2,12 @@
 
 <?= $this->section('titulo') ?>Dashboard Cliente - SGTS<?= $this->endSection() ?>
 
-<?=$this->section('sidebar') ?>
-    <?= $this->include('layouts/partials/cliente/sidebar') ?>
+<?= $this->section('sidebar') ?>
+<?= $this->include('layouts/partials/cliente/sidebar') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('navbar') ?>
-    <?= $this->include('layouts/partials/cliente/navbar') ?>
+<?= $this->include('layouts/partials/cliente/navbar') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('contenido') ?>
@@ -59,10 +59,13 @@
                                 <div class="fw-semibold text-nowrap">
                                     <?php switch (esc($ticket['estado'])) {
                                         case 'Abierto':
-                                            echo '<span class="text-success">' . esc($ticket['estado']) . '</span>';
+                                            echo '<span class="text-info">' . esc($ticket['estado']) . '</span>';
                                             break;
                                         case 'En Proceso':
                                             echo '<span class="text-warning">' . esc($ticket['estado']) . '</span>';
+                                            break;
+                                        case 'Resuelto':
+                                            echo '<span class="text-success">' . esc($ticket['estado']) . '</span>';
                                             break;
                                         case 'Cerrado':
                                             echo '<span class="text-danger">' . esc($ticket['estado']) . '</span>';
@@ -90,6 +93,7 @@
                                             data-prioridad="<?= esc($ticket['prioridad']) ?>">
                                             Ver Detalles
                                         </button>
+                                        <button class="dropdown-item" data-coreui-toggle="modal" data-id-ticket="<?= esc($ticket['id_ticket']) ?>" data-coreui-target="#modalComentarios">Comentarios</button>
                                     </div>
                                 </div>
                             </td>
@@ -126,24 +130,66 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="modalComentarios" tabindex="-1" aria-labelledby="modalComentarios" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDetallesTicketLabel">Comentarios</h5>
+                            <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="<?= site_url('cliente/tickets/comentar') ?>" method="POST" class="needs-validation" novalidate>
+                            <?= csrf_field() ?>
+                            <input type="hidden" name="id_ticket" id="comentario-id-ticket" value="">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="mensaje" class="col-form-label">Mensaje:</label>
+                                    <textarea class="form-control" name="mensaje" id="mensaje" required></textarea>
+                                </div>
+                                <label class="col-form-label">Historial de Comentarios:</label>
+                                <div class="list-group" id="lista-comentarios">
+                                    <div class="text-center text-muted py-2">Cargando...</div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="btn-comentar" class="btn btn-primary" disabled>Comentar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <?= $this->endSection() ?>
 <?= $this->section('js_adicional') ?>
 <script>
+    const baseUrl = "<?= base_url() ?>";
     // Espera a que todo el HTML esté cargado
-    document.addEventListener('DOMContentLoaded', function () {
-        
+    document.addEventListener('DOMContentLoaded', function() {
+
         // 1. Selecciona el modal
         const modalDetalles = document.getElementById('modalDetallesTicket');
-        
+        const modalComentarios = document.getElementById('modalComentarios');
+        const listaComentarios = document.getElementById('lista-comentarios');
+        const comentarioIdTicket = modalComentarios.querySelector('#comentario-id-ticket');
+        const comentarioMensaje = modalComentarios.querySelector('#mensaje');
+        const btnComentar = document.getElementById('btn-comentar');
+
+        comentarioMensaje.addEventListener('input', function() {
+            if (this.value !== this.dataset.initialValue) {
+                btnComentar.removeAttribute('disabled');
+            } else {
+                btnComentar.setAttribute('disabled', 'disabled');
+            }
+        });
+
         // 2. Escucha el evento 'show.coreui.modal' (se dispara JUSTO ANTES de que el modal se muestre)
-        modalDetalles.addEventListener('show.coreui.modal', function (event) {
-            
+        modalDetalles.addEventListener('show.coreui.modal', function(event) {
+
             // 3. Obtiene el botón que disparó el modal
             const button = event.relatedTarget;
-            
+
             // 4. Extrae la información de los atributos 'data-*' del botón
             const asunto = button.getAttribute('data-asunto');
             const fechaCierre = button.getAttribute('data-fecha-cierre') || 'No disponible'; // Fallback
@@ -155,7 +201,7 @@
             const modalFechaCierre = modalDetalles.querySelector('#modal-fecha-cierre');
             const modalDescripcion = modalDetalles.querySelector('#modal-descripcion');
             const modalPrioridad = modalDetalles.querySelector('#modal-prioridad');
-            
+
             // 6. Rellena el modal con los datos extraídos
             modalTitle.textContent = 'Detalles: ' + asunto;
             modalFechaCierre.textContent = fechaCierre;
@@ -178,6 +224,50 @@
             }
             modalPrioridad.innerHTML = prioridadHtml; // .innerHTML para insertar HTML
         });
+
+        modalComentarios.addEventListener('show.coreui.modal', function() {
+            btnComentar.setAttribute('disabled', 'disabled');
+
+            const button = event.relatedTarget;
+
+            const idTicket = button.getAttribute('data-id-ticket');
+
+            comentarioIdTicket.value = idTicket;
+
+            // A. Limpiar lista anterior y mostrar "Cargando"
+            listaComentarios.innerHTML = '<div class="list-group-item text-center text-muted">Cargando historial...</div>';
+
+            fetch(`${baseUrl}cliente/tickets/obtener-comentarios/${idTicket}`)
+                .then(response => response.json())
+                .then(data => {
+                    listaComentarios.innerHTML = '';
+
+                    if (data.length === 0) {
+                        listaComentarios.innerHTML = '<div class="list-group-item text-center text-muted small">No hay avances registrados.</div>';
+                        return;
+                    }
+
+                    data.forEach(obs => {
+                        const item = document.createElement('a');
+                        item.href = '#';
+                        item.className = 'list-group-item list-group-item-action';
+
+                        item.innerHTML = `
+                            <div class="d-flex w-100 justify-content-between">
+                              <h6 class="mb-1">${obs.nombre_usuario}</h6>
+                              <small>${obs.fecha_comentario}</small>
+                            </div>
+                            <p class="mb-1">${obs.mensaje}</p>
+                    `;
+
+                        listaComentarios.appendChild(item);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    listaComentarios.innerHTML = '<div class="list-group-item text-danger small">Error al cargar comentarios.</div>';
+                });
+        })
     });
 </script>
 <?= $this->endSection() ?>

@@ -25,4 +25,11 @@ class UsuarioModel extends Model
             ->join('estados_usuario', 'usuarios.id_estado_usuario = estados_usuario.id_estado_usuario')
             ->findAll();
     }
+
+    public function obtenerTecnicos()
+    {
+        return $this->where('id_rol', 2)
+        ->where('id_estado_usuario', 1)
+        ->findAll();
+    }
 }

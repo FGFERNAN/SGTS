@@ -7,9 +7,19 @@ use App\Models\TicketModel;
 use App\Models\CategoriaModel;
 use App\Models\PrioridadModel;
 use App\Models\EstadoTicketModel;
+use App\Models\ComentarioModel;
 
 class Tickets extends BaseController
 {
+    public function obtenerComentarios($id_ticket)
+    {
+        $comentarioModel = new ComentarioModel();
+
+        $comentarios = $comentarioModel->obtenerComentarios($id_ticket);
+
+        return $this->response->setJSON($comentarios);
+    }
+
     public function crearTicket()
     {
         $categoriaModel = new CategoriaModel();
@@ -84,5 +94,26 @@ class Tickets extends BaseController
         }
 
         return view('cliente/dashboard', $data);
+    }
+
+    public function comentar()
+    {
+        $comentarioModel = new ComentarioModel();
+
+        $id_ticket = $this->request->getPost('id_ticket');
+
+        $mensaje = $this->request->getPost('mensaje');
+
+        if (!empty($mensaje) && trim($mensaje) !== '') {
+            $comentarioData = [
+                'mensaje' => $mensaje,
+                'fecha_comentario' => date('Y-m-d H:i:s'),
+                'observaciones' => 'false',
+                'id_ticket' => $id_ticket,
+                'id_usuario' => session()->get('id_usuario')
+            ];
+            $comentarioModel->insert($comentarioData);
+        }
+        return redirect()->to(site_url('cliente/dashboard'))->with('success', 'Comentario Exitoso.');
     }
 }

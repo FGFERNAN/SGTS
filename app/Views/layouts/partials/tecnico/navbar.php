@@ -1,4 +1,8 @@
 <header class="header header-sticky p-0 mb-4">
+    <?php
+    $notificaciones = obtener_notificaciones_usuario();
+    $cantidad = count($notificaciones);
+    ?>
     <div class="container-fluid border-bottom px-4">
         <button class="header-toggler" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()" style="margin-inline-start: -14px;">
             <svg class="icon icon-lg">
@@ -10,10 +14,45 @@
             <li class="nav-item"><a class="nav-link" href="#">Reportes</a></li>
         </ul>
         <ul class="header-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="#">
+            <li class="nav-item dropdown">
+                <a class="nav-link position-relative" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <svg class="icon icon-lg">
                         <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-bell') ?>"></use>
-                    </svg></a></li>
+                    </svg>
+                    <!-- 2. Badge Contador (Solo si hay notificaciones) -->
+                    <?php if ($cantidad > 0): ?>
+                        <span class="position-absolute top-1 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                            <?= $cantidad ?>
+                            <span class="visually-hidden">mensajes no leídos</span>
+                        </span>
+                    <?php endif; ?>
+                </a>
+                <!-- 3. Menú Desplegable -->
+                <div class="dropdown-menu dropdown-menu-end pt-0" style="min-width: 250px;">
+                    <div class="dropdown-header bg-light py-2">
+                        <div class="fw-semibold">Notificaciones</div>
+                    </div>
+
+                    <?php if ($cantidad == 0): ?>
+                        <div class="dropdown-item text-muted text-center py-3 small">
+                            No tienes notificaciones nuevas.
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($notificaciones as $n): ?>
+                            <a class="dropdown-item border-bottom py-2" href="<?= site_url('notificaciones/leer/' . $n['id_notificacion']) ?>">
+                                <div class="small fw-bold"><?= esc($n['titulo']) ?></div>
+                                <div class="small text-muted text-truncate" style="max-width: 200px;">
+                                    <?= esc($n['mensaje']) ?>
+                                </div>
+                                <small class="text-muted" style="font-size: 0.7rem;">
+                                    <?= date('d/m H:i', strtotime($n['created_at'])) ?>
+                                </small>
+                            </a>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                </div>
+            </li>
             <li class="nav-item"><a class="nav-link" href="#">
                     <svg class="icon icon-lg">
                         <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-list-rich') ?>"></use>
@@ -61,7 +100,7 @@
                 <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link py-0 pe-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <div class="avatar avatar-md"><img class="avatar-img" src="<?= base_url('coreui/assets/img/avatars/8.jpg') ?>" alt="user@email.com"></div>
+                    <div class="avatar avatar-md"><img class="avatar-img" src="<?= base_url('coreui/assets/img/avatars/user_gemini.png') ?>" alt="user@email.com"></div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end pt-0">
                     <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2">Cuenta</div><a class="dropdown-item" href="#">

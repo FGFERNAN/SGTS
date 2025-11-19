@@ -27,6 +27,9 @@ $routes->get('logout', 'Auth::logout', ['filter' => 'auth']);
 // Unauthorized
 $routes->get('unauthorized', 'Auth::unauthorized');
 
+// Notificaciones
+$routes->get('notificaciones/leer/(:segment)', 'Notificacion::leer/$1');
+
 // ============================================
 // RUTAS DE DASHBOARD SEGÚN ROL
 // ============================================
@@ -56,6 +59,8 @@ $routes->group('admin', ['filter' => 'admin'], function ($routes) {
     $routes->get('categorias/editar/(:segment)', 'Admin\Categorias::editar/$1');
     $routes->post('categorias/actualizar/(:segment)', 'Admin\Categorias::actualizar/$1');
     $routes->get('categorias/eliminar/(:segment)', 'Admin\Categorias::eliminar/$1');
+    $routes->get('tickets', 'Admin\Tickets::index');
+    $routes->post('tickets/asignarTecnico', 'Admin\Tickets::asignarTecnico');
 });
 
 // ============================================
@@ -65,7 +70,21 @@ $routes->group('admin', ['filter' => 'admin'], function ($routes) {
 $routes->group('cliente', ['filter' => 'role:3'], function ($routes) {
     // Rutas protegidas por el filtro ClienteFilter
     $routes->get('dashboard', 'Cliente\Dashboard::index');
+    $routes->get('tickets/obtener-comentarios/(:segment)', 'Cliente\Tickets::obtenerComentarios/$1');
     $routes->get('tickets/crear', 'Cliente\Tickets::crearTicket');
     $routes->post('tickets/guardar', 'Cliente\Tickets::guardarTicket');
     $routes->get('tickets/detalles/(:segment)', 'Cliente\Tickets::detallesTicket/$1');
+    $routes->post('tickets/comentar', 'Cliente\Tickets::comentar');
+});
+
+// ============================================
+// RUTAS DE TÉCNICO
+// ============================================
+$routes->group('tecnico', ['filter' => 'role:2'], function ($routes) {
+    // Rutas protegidas por el filtro TecnicoFilter
+    $routes->get('dashboard', 'Tecnico\Dashboard::index');
+    $routes->get('tickets/obtener-observaciones/(:segment)', 'Tecnico\Tickets::obtenerObservaciones/$1');
+    $routes->get('tickets/obtener-comentarios/(:segment)', 'Tecnico\Tickets::obtenerComentarios/$1');
+    $routes->post('tickets/registrar-avances', 'Tecnico\Tickets::registrarAvances');
+    $routes->post('tickets/comentar', 'Tecnico\Tickets::comentar');
 });
