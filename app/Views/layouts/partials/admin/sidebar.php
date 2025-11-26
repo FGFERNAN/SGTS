@@ -36,7 +36,7 @@
                 <svg class="nav-icon">
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user-follow') ?>"></use>
                 </svg> Asignación</a></li>
-        <li class="nav-item"><a class="nav-link" href="widgets.html">
+        <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/tickets/resueltos') ?>">
                 <svg class="nav-icon">
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-check-circle') ?>"></use>
                 </svg> Cierre<span class="badge badge-sm bg-info ms-auto">20</span></a></li>
@@ -46,7 +46,7 @@
                 <svg class="nav-icon">
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-history') ?>"></use>
                 </svg> Historial</a></li>
-        <li class="nav-item"><a class="nav-link" href="https://coreui.io/bootstrap/docs/templates/installation/" target="_blank">
+        <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/reportes') ?>">
                 <svg class="nav-icon">
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-chart-pie') ?>"></use>
                 </svg> Reportes</a></li>

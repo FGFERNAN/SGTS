@@ -8,7 +8,7 @@
         <ul class="header-nav d-none d-lg-flex">
             <li class="nav-item"><a class="nav-link" href="<?= site_url('/') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/usuarios') ?>">Usuarios</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Reportes</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/reportes') ?>">Reportes</a></li>
         </ul>
         <ul class="header-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#">

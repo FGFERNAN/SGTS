@@ -61,6 +61,11 @@ $routes->group('admin', ['filter' => 'admin'], function ($routes) {
     $routes->get('categorias/eliminar/(:segment)', 'Admin\Categorias::eliminar/$1');
     $routes->get('tickets', 'Admin\Tickets::index');
     $routes->post('tickets/asignarTecnico', 'Admin\Tickets::asignarTecnico');
+    $routes->get('tickets/resueltos', 'Admin\Tickets::resueltos');
+    $routes->get('tickets/obtener-observaciones/(:segment)', 'Tecnico\Tickets::obtenerObservaciones/$1');
+    $routes->get('reportes', 'Admin\Reportes::index');
+    $routes->get('reportes/pdf', 'Admin\Reportes::exportarPdf');
+    $routes->get('reportes/excel', 'Admin\Reportes::exportarExcel');
 });
 
 // ============================================

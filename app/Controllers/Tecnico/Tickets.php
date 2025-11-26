@@ -5,7 +5,7 @@ namespace App\Controllers\Tecnico;
 use App\Controllers\BaseController;
 use App\Models\TicketModel;
 use App\Models\CategoriaModel;
-use App\Models\PrioridadModel;
+use App\Models\PrioridadModel; 
 use App\Models\EstadoTicketModel;
 use App\Models\HistorialModel;
 use App\Models\ComentarioModel;

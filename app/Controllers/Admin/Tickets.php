@@ -1,15 +1,16 @@
 <?php
+
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\TicketModel;
 use App\Models\UsuarioModel;
 use App\Models\CategoriaModel;
-use App\Models\PrioridadModel; 
+use App\Models\PrioridadModel;
 use App\Models\EstadoModel;
 use App\Models\HistorialModel;
 use App\Models\NotificacionModel;
-use CodeIgniter\HTTP\SiteURI;
+use App\Models\ComentarioModel;
 
 class Tickets extends BaseController
 {
@@ -18,10 +19,79 @@ class Tickets extends BaseController
         $ticketModel = new TicketModel();
         $usuarioModel = new UsuarioModel();
         $estadoModel = new EstadoModel();
-        $data['estados'] = $estadoModel->findAll();
-        $data['tickets'] = $ticketModel->obtenerTicketsPorAdmin();
-        $data['tecnicos'] = $usuarioModel->obtenerTecnicos();
+        $categoriaModel = new CategoriaModel();
+
+        // 1. Capturar los filtros de la URL (GET)
+        $filtros = [
+            'id_tecnico'   => $this->request->getGet('id_tecnico'),
+            'id_estado'    => $this->request->getGet('id_estado'),
+            'id_categoria' => $this->request->getGet('id_categoria'),
+            'fecha_inicio' => $this->request->getGet('fecha_inicio'),
+            'fecha_fin'    => $this->request->getGet('fecha_fin'),
+        ];
+
+        // 2. Obtener los tickets aplicando los filtros
+        $tickets = $ticketModel->filtrarTickets($filtros);
+
+        // 3. Calcular Estadísticas Rápidas (Cards) sobre el resultado filtrado
+        // Esto es un "plus" visual para tu reporte
+        $totalTickets = count($tickets);
+        $abiertos = 0;
+        $cerrados = 0;
+        $resueltos = 0;
+
+        foreach ($tickets as $t) {
+            // Asumiendo que 'Cerrado' o 'Resuelto' tienen IDs específicos o nombres
+            // Ajusta esta lógica según tus IDs de estado reales
+            if ($t['id_estado_ticket'] == 1 || $t['id_estado_ticket'] == 2) {
+                $abiertos++;
+            } elseif($t['id_estado_ticket'] == 3) {
+                $resueltos++;
+            } else {
+                $cerrados++;
+            }
+        }
+
+        // 4. Preparar datos para la vista (Selects y Resultados)
+        $data = [
+            'tickets'      => $tickets,
+            'filtros'      => $filtros, // Para mantener los inputs llenos después de filtrar
+            
+            // Datos para llenar los selects del filtro
+            'tecnicos'     => $usuarioModel->obtenerTecnicos(), 
+            'estados'      => $estadoModel->findAll(),
+            'estados_modal'=> $estadoModel->obtenerAbiertos(),
+            'categorias'   => $categoriaModel->getAll(),
+
+            // Datos para las Cards
+            'stats' => [
+                'total'    => $totalTickets,
+                'abiertos' => $abiertos,
+                'cerrados' => $cerrados,
+                'resueltos' => $resueltos,
+            ]
+        ];
         return view('admin/tickets/index', $data);
+    }
+
+    public function resueltos()
+    {
+        $ticketModel = new TicketModel();
+        $estadoModel = new EstadoModel();
+        $usuarioModel = new UsuarioModel();
+        $data['estados'] = $estadoModel->findAll();
+        $data['tickets'] = $ticketModel->obtenerTicketsResueltosAdmin();
+        $data['tecnicos'] = $usuarioModel->obtenerTecnicos();
+        return view('admin/tickets/resueltos', $data);
+    }
+
+    public function obtenerObservaciones($id_ticket)
+    {
+        $comentarioModel = new ComentarioModel();
+
+        $observaciones = $comentarioModel->obtenerObservaciones($id_ticket);
+
+        return $this->response->setJSON($observaciones);
     }
 
     public function asignarTecnico()
@@ -34,10 +104,18 @@ class Tickets extends BaseController
         $id_ticket = $this->request->getPost('id_ticket');
         $id_estado_ticket = $this->request->getPost('id_estado_ticket');
 
-        $datosActualizar = [
-            'id_usuario_tecnico' => $id_tecnico,
-            'id_estado_ticket' => $id_estado_ticket,
-        ];
+        if (empty($id_tecnico)) {
+            $datosActualizar = [
+                'id_estado_ticket' => $id_estado_ticket,
+            ];
+            $url = 'admin/tickets/resueltos';
+        } else {
+            $datosActualizar = [
+                'id_usuario_tecnico' => $id_tecnico,
+                'id_estado_ticket' => $id_estado_ticket,
+            ];
+            $url = 'admin/tickets';
+        }
 
         $ticketModel->update($id_ticket, $datosActualizar);
 
@@ -58,8 +136,6 @@ class Tickets extends BaseController
         ];
         $historialModel->insert($historialData);
 
-        return redirect()->to(site_url('admin/tickets'))->with('success', 'Técnico asignado correctamente al ticket.');
+        return redirect()->to(site_url($url))->with('success', 'Técnico asignado correctamente al ticket.');
     }
 }
-
-?>

@@ -12,144 +12,7 @@
 
 <?= $this->section('contenido') ?>
 <h2 class="mb-4">Tickets</h2>
-<div class="card mb-4 border-top-primary border-top-3 shadow-sm">
-    <div class="card-header py-3">
-        <strong class="d-flex align-items-center gap-2">
-            <i class="fa-solid fa-filter text-primary"></i> Filtros de Búsqueda
-        </strong>
-    </div>
-    <div class="card-body">
-        <form method="GET" action="<?= site_url('admin/tickets') ?>">
-            <div class="row g-3">
-
-                <!-- Rango de Fechas -->
-                <div class="col-md-3">
-                    <label class="form-label small text-muted fw-bold">Fecha Inicio</label>
-                    <input type="date" name="fecha_inicio" class="form-control" value="<?= esc($filtros['fecha_inicio']) ?>">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label small text-muted fw-bold">Fecha Fin</label>
-                    <input type="date" name="fecha_fin" class="form-control" value="<?= esc($filtros['fecha_fin']) ?>">
-                </div>
-
-                <!-- Selects -->
-                <div class="col-md-2">
-                    <label class="form-label small text-muted fw-bold">Técnico</label>
-                    <select name="id_tecnico" class="form-select">
-                        <option value="">Todos</option>
-                        <?php foreach ($tecnicos as $tec): ?>
-                            <option value="<?= $tec['id_usuario'] ?>" <?= ($filtros['id_tecnico'] == $tec['id_usuario']) ? 'selected' : '' ?>>
-                                <?= esc($tec['nombre'] . ' ' . $tec['apellidos']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label small text-muted fw-bold">Estado</label>
-                    <select name="id_estado" class="form-select">
-                        <option value="">Todos</option>
-                        <?php foreach ($estados as $est): ?>
-                            <option value="<?= $est['id_estado_ticket'] ?>" <?= ($filtros['id_estado'] == $est['id_estado_ticket']) ? 'selected' : '' ?>>
-                                <?= esc($est['nombre']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label small text-muted fw-bold">Categoría</label>
-                    <select name="id_categoria" class="form-select">
-                        <option value="">Todas</option>
-                        <?php foreach ($categorias as $cat): ?>
-                            <option value="<?= $cat['id_categoria'] ?>" <?= ($filtros['id_categoria'] == $cat['id_categoria']) ? 'selected' : '' ?>>
-                                <?= esc($cat['nombre']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <!-- Botones de Acción -->
-                <div class="col-12 d-flex justify-content-end gap-2 mt-4 border-top pt-3">
-                    <a href="<?= site_url('admin/tickets') ?>" class="btn btn-outline-secondary">
-                        <i class="fa-solid fa-eraser"></i> Limpiar Filtros
-                    </a>
-                    <button type="submit" class="btn btn-primary px-4">
-                        <i class="fa-solid fa-magnifying-glass"></i> Generar Reporte
-                    </button>
-                    <!-- NUEVOS BOTONES DE EXPORTACIÓN -->
-                    <div class="vr mx-2"></div> <!-- Separador vertical -->
-
-                    <!-- Botón PDF -->
-                    <!-- Concatenamos la query string actual para mantener los filtros -->
-                    <a href="<?= site_url('admin/reportes/pdf?' . $_SERVER['QUERY_STRING']) ?>" target="_blank" class="btn btn-danger">
-                        <i class="fas fa-file-pdf"></i> PDF
-                    </a>
-
-                    <!-- Botón Excel -->
-                    <a href="<?= site_url('admin/reportes/excel?' . $_SERVER['QUERY_STRING']) ?>" target="_blank" class="btn btn-success text-white">
-                        <i class="fas fa-file-excel"></i> Excel
-                    </a>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 <div class="card">
-    <div class="card-header">
-        <!-- 1. CARDS DE RESUMEN (KPIs) -->
-        <!-- Estos números cambian dinámicamente según los filtros aplicados -->
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card text-white bg-primary h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                        <h5 class="card-title text-uppercase font-weight-bold opacity-75">Total Encontrados</h5>
-                        <p class="card-text display-4 fw-bold mb-0"><?= $stats['total'] ?></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card text-white bg-warning h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                        <h5 class="card-title text-uppercase font-weight-bold opacity-75">Pendientes / En Proceso</h5>
-                        <p class="card-text display-4 fw-bold mb-0"><?= $stats['abiertos'] ?></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card text-white bg-success h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                        <h5 class="card-title text-uppercase font-weight-bold opacity-75">Resueltos</h5>
-                        <p class="card-text display-4 fw-bold mb-0"><?= $stats['resueltos'] ?></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card text-white bg-danger h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                        <h5 class="card-title text-uppercase font-weight-bold opacity-75">Cerrados</h5>
-                        <p class="card-text display-4 fw-bold mb-0"><?= $stats['cerrados'] ?></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="row">
-            <div class="col-md-10">
-            </div>
-            <div class="col-md-2 text-end">
-                <a href="<?= site_url('cliente/tickets/crear') ?>" class="btn btn-primary me-2">
-                    <svg class="icon">
-                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-filter') ?>"></use>
-                    </svg>
-                </a>
-                <a href="<?= site_url('cliente/tickets/crear') ?>" class="btn btn-primary">
-                    <svg class="icon">
-                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') ?>"></use>
-                    </svg>
-                </a>
-            </div>
-        </div> -->
-    </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table border mb-0">
@@ -247,8 +110,7 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="modal-tecnico" class="col-form-label">Técnico Asignado:</label>
-                                            <select class="form-control" name="id_usuario_tecnico" id="modal-tecnico" data-initial-value="" required>
-                                                <option value="">Sin Asignar</option>
+                                            <select class="form-control" name="id_usuario_tecnico" id="modal-tecnico" disabled>
                                                 <?php foreach ($tecnicos as $tecnico): ?>
                                                     <option value="<?= esc($tecnico['id_usuario']) ?>"><?= esc($tecnico['nombre'] . ' ' . $tecnico['apellidos']) ?></option>
                                                 <?php endforeach; ?>
@@ -326,15 +188,6 @@
         const modalDescripcion = modalDetalles.querySelector('#modal-descripcion');
         const modalPrioridad = modalDetalles.querySelector('#modal-prioridad');
         const btnGuardarCambios = document.getElementById('btn-guardar-cambios');
-
-        modalTecnico.addEventListener('change', function() {
-            // Compara el valor actual con el valor 'inicial' que guardamos en el data-attribute
-            if (this.value !== this.dataset.initialValue) {
-                btnGuardarCambios.removeAttribute('disabled');
-            } else {
-                btnGuardarCambios.setAttribute('disabled', 'disabled');
-            }
-        });
 
         modalEstado.addEventListener('change', function() {
             // Compara el valor actual con el valor 'inicial' que guardamos en el data-attribute
