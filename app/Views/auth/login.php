@@ -11,42 +11,24 @@
                     <div class="card-body">
                         <h1>Login</h1>
                         <p class="text-body-secondary">Sign In to your account</p>
-                        <!-- Mensaje de éxito (cuando viene del registro) -->
-                        <?php if (session()->has('success')): ?>
-                            <div class="alert alert-success alert-dismissible fade show">
-                                <?= session('success') ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if (session()->getFlashdata('error_state')): ?>
-                            <div class="alert alert-danger">
-                                <?= session()->getFlashdata('error_state') ?>
-                            </div>
-                        <?php endif; ?>
-
-                        <!-- Errores de validación -->
-                        <?php if (session()->has('errors')): ?>
-                            <div class="alert alert-danger">
-                                <ul class="mb-0">
-                                    <?php foreach (session('errors') as $error): ?>
-                                        <li><?= esc($error) ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
-                        <?php endif; ?>
                         <form action="<?= base_url('autenticar') ?>" method="POST" id="formLogin" class="needs-validation" novalidate>
                             <?= csrf_field() ?>
+                            <?php $errors = session('errors'); ?>
                             <div class="input-group mb-3"><span class="input-group-text">
                                     <svg class="icon">
                                         <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                     </svg></span>
-                                <input class="form-control <?= session()->getFlashdata('error_email') != '' ? 'error-input' : '' ?>" type="email" name="email" id="email" value="<?= old('email') ?>" placeholder="Email" required>
-                                <div class="invalid-feedback">
+                                <input class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>" type="email" name="email" id="email" value="<?= old('email') ?>" placeholder="Email" required>
+                                <div class="invalid-feedback <?= isset($errors['email']) ? 'd-none' : '' ?>">
                                     Por favor ingresa un correo válido.
                                 </div>
+                                <?php if (isset($errors['email'])) : ?>
+                                    <div class="invalid-feedback">
+                                        <?= $errors['email'] ?>
+                                    </div>
+                                <?php endif; ?>
                                 <?php if (session()->getFlashdata('error_email')): ?>
-                                    <div class="small text-danger mt-1">
+                                    <div class="invalid-feedback d-block">
                                         <?= session()->getFlashdata('error_email') ?>
                                     </div>
                                 <?php endif; ?>
@@ -55,13 +37,26 @@
                                     <svg class="icon">
                                         <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
                                     </svg></span>
-                                <input type="password" placeholder="Password" name="password" id="password" class="form-control <?= session()->getFlashdata('error_password') != '' ? 'error-input' : '' ?>" required>
-                                <div class="invalid-feedback">
+                                <input type="password" placeholder="Password" name="password" id="password" class="form-control <?= isset($errors['password']) ? 'is-invalid' : '' ?>" required>
+                                <span class="password-toggle d-none" style="cursor: pointer;">
+                                    <i class="fa fa-eye-slash"></i>
+                                </span>
+                                <div class="invalid-feedback <?= isset($errors['password']) ? 'd-none' : '' ?>">
                                     Por favor ingresa tu contraseña.
                                 </div>
+                                <?php if (isset($errors['password'])) : ?>
+                                    <div class="invalid-feedback">
+                                        <?= $errors['password'] ?>
+                                    </div>
+                                <?php endif; ?>
                                 <?php if (session()->getFlashdata('error_password')): ?>
-                                    <div class="small text-danger mt-1">
+                                    <div class="invalid-feedback d-block">
                                         <?= session()->getFlashdata('error_password') ?>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if (session()->getFlashdata('error_state')): ?>
+                                    <div class="invalid-feedback d-block">
+                                        <?= session()->getFlashdata('error_state') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -76,13 +71,16 @@
                         </form>
                     </div>
                 </div>
-
-
                 <div class="card col-md-5 text-white bg-primary py-5">
                     <div class="card-body text-center">
                         <div>
                             <h2>Sign up</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <!-- Mensaje de éxito (cuando viene del registro) -->
+                            <?php if (session()->has('success')): ?>
+                                <p><?= session('success') ?></p>
+                            <?php else: ?>
+                                <p>¿No tienes cuenta? Regístrate dando clic en el botón de abajo.</p>
+                            <?php endif; ?>
                             <a href="<?= base_url('registro') ?>" class="btn btn-lg btn-outline-light mt-3">Register Now!</a>
                         </div>
                     </div>

@@ -53,9 +53,9 @@
 
                 </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="#">
+            <li class="nav-item"><a class="nav-link" href="<?= site_url('tecnico/dashboard') ?>">
                     <svg class="icon icon-lg">
-                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-list-rich') ?>"></use>
+                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-tags') ?>"></use>
                     </svg></a></li>
             <li class="nav-item"><a class="nav-link" href="#">
                     <svg class="icon icon-lg">
@@ -145,7 +145,7 @@
     <div class="container-fluid px-4">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0">
-                <li class="breadcrumb-item"><a href="#">Home</a>
+                <li class="breadcrumb-item"><a href="<?= site_url('/') ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item active"><span>Dashboard</span>
                 </li>

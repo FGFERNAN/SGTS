@@ -56,7 +56,7 @@
                             <div class="col-12">
                                 <div class="input-group mb-3"><span class="input-group-text">
                                         <svg class="icon">
-                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-envelope-open') ?>"></use>
+                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-envelope-closed') ?>"></use>
                                         </svg></span>
                                     <input class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>" name="email" type="email" placeholder="Email" value="<?= old('email') ?>" required>
                                     <div class="invalid-feedback <?= isset($errors['email']) ? 'd-none' : '' ?>">
@@ -72,7 +72,7 @@
                             <div class="col-md-6">
                                 <div class="input-group mb-4"><span class="input-group-text">
                                         <svg class="icon">
-                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
+                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-contact') ?>"></use>
                                         </svg></span>
                                     <select name="id_tipo_documento" class="form-control <?= isset($errors['id_tipo_documento']) ? 'is-invalid' : '' ?>" required>
                                         <option value="" <?= old('id_tipo_documento') == '' ? 'selected' : '' ?>>Tipo Documento</option>
@@ -93,7 +93,7 @@
                             <div class="col-md-6">
                                 <div class="input-group mb-4"><span class="input-group-text">
                                         <svg class="icon">
-                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
+                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-wallet') ?>"></use>
                                         </svg></span>
                                     <input class="form-control <?= isset($errors['id_usuario']) ? 'is-invalid' : '' ?>" name="id_usuario" type="text" value="<?= old('id_usuario') ?>" inputmode="numeric" pattern="(\d{8})|(\d{10})|(\d{11})|(\d{6}-\d{5})" placeholder="Número Documento" required>
                                     <div class="invalid-feedback <?= isset($errors['id_usuario']) ? 'd-none' : '' ?>">
@@ -109,7 +109,7 @@
                             <div class="col-md-6">
                                 <div class="input-group mb-4"><span class="input-group-text">
                                         <svg class="icon">
-                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
+                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-badge') ?>"></use>
                                         </svg></span>
                                     <select name="id_rol" class="form-control <?= isset($errors['id_rol']) ? 'is-invalid' : '' ?>" required>
                                         <option value="">Seleccione Rol</option>

@@ -20,7 +20,9 @@
             </div>
             <div class="col-md-4 text-end">
                 <a href="<?= site_url('cliente/tickets/crear') ?>" class="btn btn-primary">
-                    <i class="fa-solid fa-user-plus"></i>
+                    <svg class="icon">
+                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-plus') ?>"></use>
+                    </svg>
                 </a>
             </div>
         </div>

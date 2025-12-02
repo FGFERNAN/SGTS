@@ -2,12 +2,12 @@
 
 <?= $this->section('titulo') ?>Usuarios - SGTS<?= $this->endSection() ?>
 
-<?=$this->section('sidebar') ?>
-    <?= $this->include('layouts/partials/admin/sidebar') ?>
+<?= $this->section('sidebar') ?>
+<?= $this->include('layouts/partials/admin/sidebar') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('navbar') ?>
-    <?= $this->include('layouts/partials/admin/navbar') ?>
+<?= $this->include('layouts/partials/admin/navbar') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('contenido') ?>
@@ -19,7 +19,9 @@
             </div>
             <div class="col-md-4 text-end">
                 <a href="<?= site_url('admin/usuarios/crear') ?>" class="btn btn-primary">
-                   <i class="fa-solid fa-user-plus"></i>
+                    <svg class="icon">
+                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user-plus') ?>"></use>
+                    </svg>
                 </a>
             </div>
         </div>

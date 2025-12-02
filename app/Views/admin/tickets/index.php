@@ -72,10 +72,14 @@
                 <!-- Botones de Acción -->
                 <div class="col-12 d-flex justify-content-end gap-2 mt-4 border-top pt-3">
                     <a href="<?= site_url('admin/tickets') ?>" class="btn btn-outline-secondary">
-                        <i class="fa-solid fa-eraser"></i> Limpiar Filtros
+                        <svg class="icon">
+                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-trash') ?>"></use>
+                        </svg> Limpiar Filtros
                     </a>
                     <button type="submit" class="btn btn-primary px-4">
-                        <i class="fa-solid fa-magnifying-glass"></i> Generar Reporte
+                        <svg class="icon">
+                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-search') ?>"></use>
+                        </svg> Generar Reporte
                     </button>
                     <!-- NUEVOS BOTONES DE EXPORTACIÓN -->
                     <div class="vr mx-2"></div> <!-- Separador vertical -->
@@ -133,22 +137,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row">
-            <div class="col-md-10">
-            </div>
-            <div class="col-md-2 text-end">
-                <a href="<?= site_url('cliente/tickets/crear') ?>" class="btn btn-primary me-2">
-                    <svg class="icon">
-                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-filter') ?>"></use>
-                    </svg>
-                </a>
-                <a href="<?= site_url('cliente/tickets/crear') ?>" class="btn btn-primary">
-                    <svg class="icon">
-                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') ?>"></use>
-                    </svg>
-                </a>
-            </div>
-        </div> -->
     </div>
     <div class="card-body">
         <div class="table-responsive">

@@ -24,7 +24,7 @@
                             <div class="col-12">
                                 <div class="input-group mb-3"><span class="input-group-text">
                                         <svg class="icon">
-                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
+                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-badge') ?>"></use>
                                         </svg></span>
                                     <input class="form-control <?= isset($errors['nombre']) ? 'is-invalid' : '' ?>" name="nombre" type="text" placeholder="Nombre" value="<?= old('nombre') ?>" minlength="3" maxlength="50" required>
                                     <div class="invalid-feedback <?= isset($errors['nombre']) ? 'd-none' : '' ?>">
@@ -40,7 +40,7 @@
                             <div class="col-12">
                                 <div class="input-group mb-3"><span class="input-group-text">
                                         <svg class="icon">
-                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
+                                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-description') ?>"></use>
                                         </svg></span>
                                     <textarea class="form-control <?= isset($errors['descripcion']) ? 'is-invalid' : '' ?>" name="descripcion" type="text" placeholder="Descripción" minlength="5" maxlength="255" required><?= old('descripcion') ?></textarea>
                                     <div class="invalid-feedback <?= isset($errors['descripcion']) ? 'd-none' : '' ?>">

@@ -34,8 +34,8 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/tickets') ?>">
                 <svg class="nav-icon">
-                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user-follow') ?>"></use>
-                </svg> Asignación</a></li>
+                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-tags') ?>"></use>
+                </svg> Tickets</a></li>
         <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/tickets/resueltos') ?>">
                 <svg class="nav-icon">
                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-check-circle') ?>"></use>

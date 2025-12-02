@@ -2,12 +2,12 @@
 
 <?= $this->section('titulo') ?>Roles - SGTS<?= $this->endSection() ?>
 
-<?=$this->section('sidebar') ?>
-    <?= $this->include('layouts/partials/admin/sidebar') ?>
+<?= $this->section('sidebar') ?>
+<?= $this->include('layouts/partials/admin/sidebar') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('navbar') ?>
-    <?= $this->include('layouts/partials/admin/navbar') ?>
+<?= $this->include('layouts/partials/admin/navbar') ?>
 <?= $this->endSection() ?>
 
 
@@ -20,7 +20,9 @@
             </div>
             <div class="col-md-4 text-end">
                 <a href="<?= site_url('admin/roles/crear') ?>" class="btn btn-primary">
-                    <i class="fa-solid fa-user-plus"></i>
+                    <svg class="icon">
+                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user-plus') ?>"></use>
+                    </svg>
                 </a>
             </div>
         </div>
@@ -32,7 +34,7 @@
                     <tr class="align-middle">
                         <th class="bg-body-secondary text-center">
                             <svg class="icon">
-                                <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-people') ?>"></use>
+                                <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-badge') ?>"></use>
                             </svg>
                         </th>
                         <th class="bg-body-secondary">Nombre</th>

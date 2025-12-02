@@ -22,101 +22,101 @@
                                 <svg class="icon">
                                     <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                 </svg></span>
-                            <input type="text" id="nombre" name="nombre" placeholder="Nombre" class="form-control <?= isset($errors['nombre']) ? 'error-input' : '' ?>" value="<?= old('nombre') ?>" minlength="3" maxlength="50" required>
-                            <div class="invalid-feedback">
+                            <input type="text" id="nombre" name="nombre" placeholder="Nombre" class="form-control <?= isset($errors['nombre']) ? 'is-invalid' : '' ?>" value="<?= old('nombre') ?>" minlength="3" maxlength="50" required>
+                            <div class="invalid-feedback <?= isset($errors['nombre']) ? 'd-none' : '' ?>">
                                 Por favor ingresa tu nombre (Solo letras).
                             </div>
                             <?php if (isset($errors['nombre'])) : ?>
-                                <div class="small text-danger mt-1">
+                                <div class="invalid-feedback">
                                     <?= $errors['nombre'] ?>
                                 </div>
                             <?php endif; ?>
                         </div>
                         <div class="input-group mb-3"><span class="input-group-text">
                                 <svg class="icon">
-                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-envelope-open') ?>"></use>
+                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                                 </svg></span>
-                            <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" class="form-control <?= isset($errors['apellidos']) ? 'error-input' : '' ?>" value="<?= old('apellidos') ?>" minlength="3" maxlength="50" required>
-                            <div class="invalid-feedback">
+                            <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" class="form-control <?= isset($errors['apellidos']) ? 'is-invalid' : '' ?>" value="<?= old('apellidos') ?>" minlength="3" maxlength="50" required>
+                            <div class="invalid-feedback <?= isset($errors['apellidos']) ? 'd-none' : '' ?>">
                                 Por favor ingresa tus apellidos (Solo letras).
                             </div>
                             <?php if (isset($errors['apellidos'])) : ?>
-                                <div class="small text-danger mt-1">
+                                <div class="invalid-feedback">
                                     <?= $errors['apellidos'] ?>
                                 </div>
                             <?php endif; ?>
                         </div>
                         <div class="input-group mb-3"><span class="input-group-text">
                                 <svg class="icon">
-                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
+                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-envelope-closed') ?>"></use>
                                 </svg></span>
-                            <input type="email" id="email" name="email" placeholder="Email" class="form-control <?= isset($errors['email']) ? 'error-input' : '' ?>" value="<?= old('email') ?>" required>
-                            <div class="invalid-feedback">
+                            <input type="email" id="email" name="email" placeholder="Email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>" value="<?= old('email') ?>" required>
+                            <div class="invalid-feedback <?= isset($errors['email']) ? 'd-none' : '' ?>">
                                 Por favor ingresa un correo válido.
                             </div>
                             <?php if (isset($errors['email'])) : ?>
-                                <div class="small text-danger mt-1">
+                                <div class="invalid-feedback">
                                     <?= $errors['email'] ?>
                                 </div>
                             <?php endif; ?>
                         </div>
                         <div class="input-group mb-3"><span class="input-group-text">
                                 <svg class="icon">
-                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
+                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-contact') ?>"></use>
                                 </svg></span>
-                            <select name="id_tipo_documento" class="form-control <?= isset($errors['id_tipo_documento']) ? 'error-input' : '' ?>" required>
+                            <select name="id_tipo_documento" class="form-control <?= isset($errors['id_tipo_documento']) ? 'is-invalid' : '' ?>" required>
                                 <option value="" <?= old('id_tipo_documento') == '' ? 'selected' : '' ?>>Tipo Documento</option>
                                 <option value="1" <?= old('id_tipo_documento') == '1' ? 'selected' : '' ?>>Tarjeta de Identidad</option>
                                 <option value="2" <?= old('id_tipo_documento') == '2' ? 'selected' : '' ?>>Cedula de Ciudadania</option>
                                 <option value="3" <?= old('id_tipo_documento') == '3' ? 'selected' : '' ?>>Cedula de Extranjeria</option>
                             </select>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback <?= isset($errors['id_tipo_documento']) ? 'd-none' : '' ?>">
                                 Por favor selecciona un tipo de documento.
                             </div>
                             <?php if (isset($errors['id_tipo_documento'])) : ?>
-                                <div class="small text-danger mt-1">
+                                <div class="invalid-feedback">
                                     <?= $errors['id_tipo_documento'] ?>
                                 </div>
                             <?php endif; ?>
                         </div>
                         <div class="input-group mb-3"><span class="input-group-text">
                                 <svg class="icon">
-                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
+                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-wallet') ?>"></use>
                                 </svg></span>
-                            <input type="text" id="id_usuario" name="id_usuario" placeholder="Numero Documento" class="form-control <?= isset($errors['id_usuario']) ? 'error-input' : '' ?>" value="<?= old('id_usuario') ?>" inputmode="numeric" pattern="(\d{8})|(\d{10})|(\d{11})|(\d{6}-\d{5})" required>
-                            <div class="invalid-feedback">
+                            <input type="text" id="id_usuario" name="id_usuario" placeholder="Numero Documento" class="form-control <?= isset($errors['id_usuario']) ? 'is-invalid' : '' ?>" value="<?= old('id_usuario') ?>" inputmode="numeric" pattern="(\d{8})|(\d{10})|(\d{11})|(\d{6}-\d{5})" required>
+                            <div class="invalid-feedback <?= isset($errors['id_usuario']) ? 'd-none' : '' ?>">
                                 Por favor ingresa tu número de documento (Entre 8 y 11 caracteres).
                             </div>
                             <?php if (isset($errors['id_usuario'])) : ?>
-                                <div class="small text-danger mt-1">
+                                <div class="invalid-feedback">
                                     <?= $errors['id_usuario'] ?>
                                 </div>
                             <?php endif; ?>
                         </div>
                         <div class="input-group mb-3"><span class="input-group-text">
                                 <svg class="icon">
-                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
+                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
                                 </svg></span>
-                            <input type="password" id="password" name="password" placeholder="Password" class="form-control <?= isset($errors['password']) ? 'error-input' : '' ?>" pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\-_*])([a-zA-Z0-9@#$%^&+=*.\-_]){6,20}" required>
-                            <div class="invalid-feedback">
+                            <input type="password" id="password" name="password" placeholder="Password" class="form-control <?= isset($errors['password']) ? 'is-invalid' : '' ?>" pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\-_*])([a-zA-Z0-9@#$%^&+=*.\-_]){6,20}" required>
+                            <div class="invalid-feedback <?= isset($errors['password']) ? 'd-none' : '' ?>">
                                 Por favor ingresa una contraseña (Debe tener entre 6 y 20 caracteres, e incluir al menos una mayúscula, una minúscula, un número y un carácter especial.).
                             </div>
                             <?php if (isset($errors['password'])) : ?>
-                                <div class="small text-danger mt-1">
+                                <div class="invalid-feedback">
                                     <?= $errors['password'] ?>
                                 </div>
                             <?php endif; ?>
                         </div>
                         <div class="input-group mb-4"><span class="input-group-text">
                                 <svg class="icon">
-                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
+                                    <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
                                 </svg></span>
-                            <input type="password" placeholder="Confirmar Password" name="confirm_password" class="form-control <?= isset($errors['confirm_password']) ? 'error-input' : '' ?>" required>
-                            <div class="invalid-feedback">
+                            <input type="password" placeholder="Confirmar Password" name="confirm_password" class="form-control <?= isset($errors['confirm_password']) ? 'is-invalid' : '' ?>" required>
+                            <div class="invalid-feedback <?= isset($errors['confirm_password']) ? 'd-none' : '' ?>">
                                 Por favor confirma tu contraseña.
                             </div>
                             <?php if (isset($errors['confirm_password'])) : ?>
-                                <div class="small text-danger mt-1">
+                                <div class="invalid-feedback">
                                     <?= $errors['confirm_password'] ?>
                                 </div>
                             <?php endif; ?>
