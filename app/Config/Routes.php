@@ -30,11 +30,6 @@ $routes->get('unauthorized', 'Auth::unauthorized');
 // Notificaciones
 $routes->get('notificaciones/leer/(:segment)', 'Notificacion::leer/$1');
 
-// ============================================
-// RUTAS DE DASHBOARD SEGÚN ROL
-// ============================================
-$routes->get('tecnico/dashboard', 'Tecnico\Dashboard::index');
-
 
 // ============================================
 // RUTAS DE ADMINISTRACIÓN

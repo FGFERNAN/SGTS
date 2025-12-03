@@ -143,6 +143,7 @@
             <table class="table border mb-0">
                 <thead class="fw-semibold text-nowrap">
                     <tr class="align-middle">
+                        <th class="bg-body-secondary text-center">ID</th>
                         <th class="bg-body-secondary text-center">Asunto</th>
                         <th class="bg-body-secondary">Fecha Creación</th>
                         <th class="bg-body-secondary text-center">Cliente</th>
@@ -155,6 +156,9 @@
                 <tbody>
                     <tr class="align-middle">
                         <?php foreach ($tickets as $ticket): ?>
+                            <td class="text-center">
+                                <div class="text-nowrap"><?= esc($ticket['id_ticket']) ?></div>
+                            </td>
                             <td class="text-center">
                                 <div class="text-nowrap"><?= esc($ticket['asunto']) ?></div>
                             </td>
@@ -235,7 +239,7 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="modal-tecnico" class="col-form-label">Técnico Asignado:</label>
-                                            <select class="form-control" name="id_usuario_tecnico" id="modal-tecnico" data-initial-value="" required>
+                                            <select class="form-control" name="id_usuario_tecnico" id="modal-tecnico" data-initial-value="">
                                                 <option value="">Sin Asignar</option>
                                                 <?php foreach ($tecnicos as $tecnico): ?>
                                                     <option value="<?= esc($tecnico['id_usuario']) ?>"><?= esc($tecnico['nombre'] . ' ' . $tecnico['apellidos']) ?></option>

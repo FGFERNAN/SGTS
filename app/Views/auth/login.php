@@ -89,6 +89,26 @@
         </div>
     </div>
 </div>
+<!-- Modal de Error -->
+<div class="modal fade" id="modalErrorAcceso" tabindex="-1" aria-labelledby="modalErrorLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalErrorLabel">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i> Acceso Restringido
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-coreui-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí imprimimos el mensaje flashdata -->
+                <?= session()->getFlashdata('error') ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -111,4 +131,20 @@
         });
     })
 </script>
+<!-- Script para detectar y mostrar el modal automáticamente -->
+<?php if (session()->getFlashdata('error')): ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Identificar el modal por su ID
+            const modalElement = document.getElementById('modalErrorAcceso');
+            
+            // 2. Instanciar el modal usando Bootstrap/CoreUI
+            // (Asegúrate de que bootstrap.js o coreui.js ya esté cargado antes de esto)
+            const errorModal = new coreui.Modal(modalElement);
+            
+            // 3. Mostrar el modal
+            errorModal.show();
+        });
+    </script>
+<?php endif; ?>
 <?= $this->endSection() ?>

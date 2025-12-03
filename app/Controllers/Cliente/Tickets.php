@@ -8,6 +8,9 @@ use App\Models\CategoriaModel;
 use App\Models\PrioridadModel;
 use App\Models\EstadoTicketModel;
 use App\Models\ComentarioModel;
+use App\Models\NotificacionModel;
+use App\Models\UsuarioModel;
+use App\Models\HistorialModel;
 
 class Tickets extends BaseController
 {
@@ -32,6 +35,10 @@ class Tickets extends BaseController
     public function guardarTicket()
     {
         $ticketModel = new TicketModel();
+        $notificacionModel =  new NotificacionModel();
+        $historialModel = new HistorialModel();
+        $usuarioModel = new UsuarioModel();
+        $db = \Config\Database::connect();
 
         // Reglas de validación
         $reglas = [
@@ -76,11 +83,30 @@ class Tickets extends BaseController
             'id_estado_ticket' => 1, // Estado inicial: Abierto
         ];
 
-        if($ticketModel->insert($datosTicket)) {
-            return redirect()->to('/cliente/dashboard')->with('success', 'Ticket creado exitosamente.');
-        } else {
+        $db->transStart();
+        $ticketModel->insert($datosTicket);
+        $id_ticket = $ticketModel->getInsertID();
+
+        // Obtener todos los administradores
+        $admins = $usuarioModel->where('id_rol', 1)->findAll();
+
+        // Crear notificación para cada admin
+        foreach ($admins as $admin) {
+            $notificacionModel->insert([
+                'id_usuario_destino' => $admin['id_usuario'],
+                'titulo' => 'Nuevo Ticket Creado',
+                'mensaje' => 'Se ha creado el ticket #' . $id_ticket . '.',
+                'enlace' => site_url('admin/tickets'),
+                'leido' => 0,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+
+        $db->transComplete();
+        if ($db->transStatus() === false) {
             return redirect()->back()->withInput()->with('error', 'Error al crear el ticket.');
         }
+        return redirect()->to('/cliente/dashboard')->with('success', 'Ticket creado exitosamente.');
     }
 
     public function detallesTicket($id_ticket)

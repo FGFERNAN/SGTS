@@ -177,11 +177,6 @@ class Auth extends BaseController
         ];
 
         session()->set($sessionData);
-
-        if ($recordar) {
-            // Configurar la sesión para que dure más tiempo
-            session()->setTempdata('remember_me', true, 2592000); // 30 días
-        }
     }
 
     private function redirigirSegunRol()

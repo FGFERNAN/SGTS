@@ -45,7 +45,7 @@ class Tickets extends BaseController
             // Ajusta esta lógica según tus IDs de estado reales
             if ($t['id_estado_ticket'] == 1 || $t['id_estado_ticket'] == 2) {
                 $abiertos++;
-            } elseif($t['id_estado_ticket'] == 3) {
+            } elseif ($t['id_estado_ticket'] == 3) {
                 $resueltos++;
             } else {
                 $cerrados++;
@@ -56,11 +56,11 @@ class Tickets extends BaseController
         $data = [
             'tickets'      => $tickets,
             'filtros'      => $filtros, // Para mantener los inputs llenos después de filtrar
-            
+
             // Datos para llenar los selects del filtro
-            'tecnicos'     => $usuarioModel->obtenerTecnicos(), 
+            'tecnicos'     => $usuarioModel->obtenerTecnicos(),
             'estados'      => $estadoModel->findAll(),
-            'estados_modal'=> $estadoModel->obtenerAbiertos(),
+            'estados_modal' => $estadoModel->obtenerAbiertos(),
             'categorias'   => $categoriaModel->getAll(),
 
             // Datos para las Cards
@@ -99,43 +99,120 @@ class Tickets extends BaseController
         $ticketModel = new TicketModel();
         $historialModel = new HistorialModel();
         $notificacionModel =  new NotificacionModel();
+        $db = \Config\Database::connect();
 
         $id_tecnico = $this->request->getPost('id_usuario_tecnico');
         $id_ticket = $this->request->getPost('id_ticket');
         $id_estado_ticket = $this->request->getPost('id_estado_ticket');
 
-        if (empty($id_tecnico)) {
-            $datosActualizar = [
-                'id_estado_ticket' => $id_estado_ticket,
-            ];
-            $url = 'admin/tickets/resueltos';
-        } else {
-            $datosActualizar = [
-                'id_usuario_tecnico' => $id_tecnico,
-                'id_estado_ticket' => $id_estado_ticket,
-            ];
-            $url = 'admin/tickets';
+        // 2) Recuperar ticket actual
+        $ticket = $ticketModel->find($id_ticket);
+        if (!$ticket) {
+            return redirect()->back()->with('error', 'Ticket no encontrado.');
         }
+
+        $tecnico_actual = ($ticket['id_usuario_tecnico'] === '' ? null : $ticket['id_usuario_tecnico']);
+        $estado_actual  = $ticket['id_estado_ticket'];
+
+        // 3) Detectar cambios reales
+        $tecnico_cambiado = ($id_tecnico !== null) && ($id_tecnico !== $tecnico_actual);
+        $estado_cambiado  = ($id_estado_ticket !== null) && ($id_estado_ticket !== $estado_actual);
+
+        if (!$tecnico_cambiado && !$estado_cambiado) {
+            // nothing to do
+            return redirect()->back()->with('info', 'No hubo cambios para actualizar.');
+        }
+
+        // 4) Preparar datos de actualización sólo con los campos que cambiaron
+        $datosActualizar = [];
+        if ($tecnico_cambiado) {
+            $datosActualizar['id_usuario_tecnico'] = $id_tecnico;
+        }
+        if ($estado_cambiado) {
+            $datosActualizar['id_estado_ticket'] = $id_estado_ticket;
+        }
+
+        // 5) Ejecutar dentro de transacción
+        $db->transStart();
 
         $ticketModel->update($id_ticket, $datosActualizar);
 
-        $notificacionModel->insert([
-            'id_usuario_destino' => $id_tecnico,
-            'titulo' => 'Ticket Actualizado',
-            'mensaje' => 'Se ha actualizado el ticket #' . $id_ticket . '. Revisa los detalles.',
-            'enlace' => site_url('tecnico/dashboard'),
-            'leido' => 0,
-            'created_at' => date('Y-m-d H:i:s')
-        ]);
+        $actorId = session()->get('id_usuario');
 
-        $historialData = [
-            'accion' => 'Actualización Ticket',
-            'fecha_accion' => date('Y-m-d H:i:s'),
-            'id_ticket' => $id_ticket,
-            'id_usuario' => session()->get('id_usuario'),
-        ];
-        $historialModel->insert($historialData);
+        // 6) Notificaciones y historial según cambio
+        if ($tecnico_cambiado) {
+            // Notificar al nuevo técnico (si no es null)
+            if (!empty($id_tecnico)) {
+                $notificacionModel->insert([
+                    'id_usuario_destino' => $id_tecnico,
+                    'titulo' => 'Ticket asignado',
+                    'mensaje' => 'Se le ha asignado el ticket #' . $id_ticket . '.',
+                    'enlace' => site_url('tecnico/dashboard'),
+                    'leido' => 0,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+            }
 
-        return redirect()->to(site_url($url))->with('success', 'Técnico asignado correctamente al ticket.');
+            // Opcional: notificar al técnico anterior sobre la reasignación
+            if (!empty($tecnico_actual) && ($tecnico_actual !== $id_tecnico)) {
+                $notificacionModel->insert([
+                    'id_usuario_destino' => $tecnico_actual,
+                    'titulo' => 'Ticket reasignado',
+                    'mensaje' => "El ticket #{$id_ticket} fue reasignado a otro técnico.",
+                    'enlace' => site_url('tecnico/dashboard'),
+                    'leido' => 0,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+            }
+
+            // Historial: asignación
+            $historialModel->insert([
+                'accion' => 'Asignación de Técnico',
+                'fecha_accion' => date('Y-m-d H:i:s'),
+                'id_ticket' => $id_ticket,
+                'id_usuario' => $actorId,
+            ]);
+        }
+
+        if ($estado_cambiado) {
+            // Notificar al cliente (propietario del ticket) sobre cambio de estado
+            $clienteId = $ticket['id_usuario_cliente'] ?? null; // ajusta según tu columna
+            if (!empty($clienteId)) {
+                $notificacionModel->insert([
+                    'id_usuario_destino' => $clienteId,
+                    'titulo' => 'Cambio de estado en tu ticket',
+                    'mensaje' => "El estado del ticket #{$id_ticket} ha cambiado.",
+                    'enlace' => site_url("cliente/dashboard"),
+                    'leido' => 0,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+            }
+
+            // Historial: cambio de estado
+            $historialModel->insert([
+                'accion' => 'Cambio de Estado',
+                'fecha_accion' => date('Y-m-d H:i:s'),
+                'id_ticket' => $id_ticket,
+                'id_usuario' => $actorId,
+            ]);
+        }
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+            return redirect()->back()->with('error', 'Ocurrió un error al actualizar el ticket. Intenta de nuevo.');
+        }
+
+        // 7) Mensaje final según qué cambió
+        if ($tecnico_cambiado && $estado_cambiado) {
+            $msg = 'Técnico y estado actualizados correctamente.';
+        } elseif ($tecnico_cambiado) {
+            $msg = 'Técnico asignado correctamente.';
+        } else {
+            $msg = 'Estado actualizado correctamente.';
+        }
+
+        // Elegir URL de retorno según tu lógica
+        return redirect()->to(site_url('admin/tickets'))->with('success', $msg);
     }
 }

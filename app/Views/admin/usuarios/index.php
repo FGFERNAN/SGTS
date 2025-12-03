@@ -1,3 +1,7 @@
+<?php
+use CodeIgniter\I18n\Time;
+?>
+
 <?= $this->extend('layouts/main_template') ?>
 
 <?= $this->section('titulo') ?>Usuarios - SGTS<?= $this->endSection() ?>
@@ -36,8 +40,8 @@
                                 <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-people') ?>"></use>
                             </svg>
                         </th>
-                        <th class="bg-body-secondary">Nombre</th>
-                        <th class="bg-body-secondary text-center">Correo</th>
+                        <th width="20%" class="bg-body-secondary">Nombre</th>
+                        <th width="40%" class="bg-body-secondary text-center">Correo</th>
                         <th class="bg-body-secondary text-center">Rol</th>
                         <th class="bg-body-secondary">Estado</th>
                         <th class="bg-body-secondary"></th>
@@ -51,7 +55,7 @@
                             </td>
                             <td>
                                 <div class="text-nowrap"><?= esc($usuario['nombre']) . ' ' . esc($usuario['apellidos']) ?></div>
-                                <div class="small text-body-secondary text-nowrap"> Registered: Jan 1, 2023</div>
+                                <div class="small text-body-secondary text-nowrap"> Registered: <?php $fecha = Time::parse($usuario['fecha_registro']); echo $fecha->format('M j, Y'); ?></div>
                             </td>
                             <td class="text-center">
                                 <div class="text-nowrap"><?= esc($usuario['email']) ?></div>

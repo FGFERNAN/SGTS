@@ -32,17 +32,21 @@
             <table class="table border mb-0">
                 <thead class="fw-semibold text-nowrap">
                     <tr class="align-middle">
-                        <th class="bg-body-secondary text-center">Asunto</th>
-                        <th class="bg-body-secondary">Fecha Creación</th>
-                        <th class="bg-body-secondary text-center">Tecnico Asignado</th>
-                        <th class="bg-body-secondary">Categoria</th>
-                        <th class="bg-body-secondary">Estado</th>
+                        <th width="5%" class="bg-body-secondary text-center">ID</th>
+                        <th width="40%" class="bg-body-secondary text-center">Asunto</th>
+                        <th width="10%" class="bg-body-secondary">Fecha Creación</th>
+                        <th width="20%" class="bg-body-secondary text-center">Tecnico Asignado</th>
+                        <th width="15%" class="bg-body-secondary">Categoria</th>
+                        <th width="10%" class="bg-body-secondary">Estado</th>
                         <th class="bg-body-secondary"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="align-middle">
                         <?php foreach ($tickets as $ticket): ?>
+                            <td class="text-center">
+                                <div class="text-nowrap"><?= esc($ticket['id_ticket']) ?></div>
+                            </td>
                             <td class="text-center">
                                 <div class="text-nowrap"><?= esc($ticket['asunto']) ?></div>
                             </td>

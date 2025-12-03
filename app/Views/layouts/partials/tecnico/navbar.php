@@ -53,14 +53,13 @@
 
                 </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="<?= site_url('tecnico/dashboard') ?>">
+            <li class="nav-item">
+                <a class="nav-link" href="<?= site_url('tecnico/dashboard') ?>">
                     <svg class="icon icon-lg">
                         <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-tags') ?>"></use>
-                    </svg></a></li>
-            <li class="nav-item"><a class="nav-link" href="#">
-                    <svg class="icon icon-lg">
-                        <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-envelope-open') ?>"></use>
-                    </svg></a></li>
+                    </svg>
+                </a>
+            </li>
         </ul>
         <ul class="header-nav">
             <li class="nav-item py-1">
@@ -103,41 +102,29 @@
                     <div class="avatar avatar-md"><img class="avatar-img" src="<?= base_url('coreui/assets/img/avatars/user_gemini.png') ?>" alt="user@email.com"></div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end pt-0">
-                    <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2">Cuenta</div><a class="dropdown-item" href="#">
-                        <svg class="icon me-2">
-                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-bell') ?>"></use>
-                        </svg> Notificaciones<span class="badge badge-sm bg-info ms-2">42</span></a><a class="dropdown-item" href="#">
-                        <svg class="icon me-2">
-                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-envelope-open') ?>"></use>
-                        </svg> Mensajes<span class="badge badge-sm bg-success ms-2">42</span></a><a class="dropdown-item" href="#">
-                        <!-- <svg class="icon me-2">
-                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-task') ?>"></use>
-                        </svg> Tasks<span class="badge badge-sm bg-danger ms-2">42</span></a><a class="dropdown-item" href="#"> -->
+                    <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2">Cuenta</div>
+                    <a class="dropdown-item" href="<?= site_url('tecnico/dashboard') ?>">
                         <svg class="icon me-2">
                             <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-task') ?>"></use>
-                        </svg> Tickets<span class="badge badge-sm bg-warning ms-2">42</span></a>
+                        </svg> Tickets<span class="badge badge-sm bg-warning ms-2">42</span>
+                    </a>
                     <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2">
                         <div class="fw-semibold">Settings</div>
                     </div><a class="dropdown-item" href="#">
                         <svg class="icon me-2">
                             <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-user') ?>"></use>
                         </svg> Perfil</a><a class="dropdown-item" href="#">
-                        <!-- <svg class="icon me-2">
-                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-settings') ?>"></use>
-                        </svg> Settings</a><a class="dropdown-item" href="#"> -->
-                        <!-- <svg class="icon me-2">
-                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-credit-card') ?>"></use>
-                        </svg> Payments<span class="badge badge-sm bg-secondary ms-2">42</span></a><a class="dropdown-item" href="#">
-                        <svg class="icon me-2">
-                            <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-file') ?>"></use>
-                        </svg> Projects<span class="badge badge-sm bg-primary ms-2">42</span></a> -->
-                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
                             <svg class="icon me-2">
                                 <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') ?>"></use>
-                            </svg> Cancelar Cuenta</a><a class="dropdown-item" href="<?= site_url('logout') ?>">
+                            </svg> Cancelar Cuenta
+                        </a>
+                        <a class="dropdown-item" href="<?= site_url('logout') ?>">
                             <svg class="icon me-2">
                                 <use xlink:href="<?= base_url('coreui/vendors/@coreui/icons/svg/free.svg#cil-account-logout') ?>"></use>
-                            </svg> Cerrar Sesión</a>
+                            </svg> Cerrar Sesión
+                        </a>
                 </div>
             </li>
         </ul>

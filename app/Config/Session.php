@@ -71,13 +71,13 @@ class Session extends BaseConfig
      */
     public bool $matchIP = false;
 
-    /**
-     * --------------------------------------------------------------------------
-     * Session Time to Update
-     * --------------------------------------------------------------------------
-     *
-     * How many seconds between CI regenerating the session ID.
-     */
+        /**
+         * --------------------------------------------------------------------------
+         * Session Time to Update
+         * --------------------------------------------------------------------------
+         *
+         * How many seconds between CI regenerating the session ID.
+         */
     public int $timeToUpdate = 300;
 
     /**
